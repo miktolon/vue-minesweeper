@@ -8,11 +8,12 @@
             <span :class="cellNumberCls">
                 {{ cell?.minesNearby > 0 ? cell?.minesNearby : '' }}
             </span>
-            <img v-if="gameEnded && !cell?.exploded && !cell?.locked && cell?.isMine" :src="cellMine" alt="cell-mine" />
-            <img v-if="!gameEnded && cell?.locked" :src="cellLocked" alt="cell-locked" />
-            <img v-if="gameEnded && cell?.locked && !cell?.isMine" :src="cellLockedInvalid" alt="cell-locked-invalid" />
-            <img v-if="gameEnded && cell?.locked && cell?.isMine" :src="cellLocked" alt="cell-locked-invalid" />
-            <img v-if="cell?.exploded" :src="cellExploded" alt="mine-exploded" />
+            
+            <svg-icon v-if="gameEnded && !cell?.exploded && !cell?.locked && cell?.isMine" name="Mine" />
+            <svg-icon v-if="!gameEnded && cell?.locked" name="Flag" />
+            <svg-icon v-if="gameEnded && cell?.locked && !cell?.isMine" name="FlagInvalid" />
+            <svg-icon v-if="gameEnded && cell?.locked && cell?.isMine" name="Flag" />
+            <svg-icon v-if="cell?.exploded" name="MineExploded" />
         </button>
     </div>
 </template>
@@ -22,15 +23,15 @@ import type { PropType } from 'vue';
 import type { ICell } from '@/common/types';
 import { gameEnded } from '@/store/store';
 import { select, lock } from '@/game';
-import cellLocked from "@/assets/svg/flag.svg";
-import cellLockedInvalid from "@/assets/svg/flag-invalid.svg";
-import cellMine from "@/assets/svg/mine.svg";
-import cellExploded from "@/assets/svg/mine-exploded.svg";
+import SvgIcon from "@/components/SvgIcon.vue";
 </script>
 
 <script lang="ts">
 export default {
     name: 'Cell',
+    components: {
+        SvgIcon
+    },
     props: {
         cell: {
             type: Object as PropType<ICell>,
