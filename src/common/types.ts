@@ -29,7 +29,7 @@ export const DIFFICULTIES: { [key: string]: any; } = {
             y: 9
         },
         container: 600,
-        mMultiplier: 6
+        mineAmount: 12
     },
     normal: {
         grid: {
@@ -37,7 +37,7 @@ export const DIFFICULTIES: { [key: string]: any; } = {
             y: 10
         },
         container: 800,
-        mMultiplier: 5
+        mineAmount: 28
     },
     hard: {
         grid: {
@@ -45,7 +45,7 @@ export const DIFFICULTIES: { [key: string]: any; } = {
             y: 14
         },
         container: 1000,
-        mMultiplier: 4
+        mineAmount: 64
     }
 };
 

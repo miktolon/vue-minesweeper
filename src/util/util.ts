@@ -2,21 +2,35 @@ import { gameState } from "@/store/store";
 import { DEFAULT_DIFFICULTY, DIFFICULTIES, type ICell } from "@/common/types";
 
 export const getMatrix = (): Array<Array<ICell>> => {
-    let matrix: Array<Array<ICell>> = new Array(gameState.size_y);
-    for (let i = 0; i < matrix.length; i++) {
-        matrix[i] = new Array(gameState.size_x);
-        for (let j = 0; j < matrix[i].length; j++) {
-            matrix[i][j] = {
-                y: i,
-                x: j,
-                isMine: Math.floor(Math.random() * DIFFICULTIES[gameState.difficulty].mMultiplier) == 1,
-                locked: false,
-                checked: false,
-                exploded: false,
-                minesNearby: 0
-            }
+    let minesLeft = getMinesAmount();
+    let matrix = Array(gameState.size_y)
+        .fill(undefined)
+        .map((_, i) => Array(gameState.size_x)
+            .fill(undefined)
+            .map((_, j) => {
+                return {
+                    y: i,
+                    x: j,
+                    isMine: false,
+                    locked: false,
+                    checked: false,
+                    exploded: false,
+                    minesNearby: 0
+                }
+            })
+        );
+
+    let row;
+    let col;
+    while( minesLeft > 0 ) {
+        row = Math.floor(Math.random() * gameState.size_y);
+        col = Math.floor(Math.random() * gameState.size_x);
+        if (matrix[row][col].isMine === false) {
+            matrix[row][col].isMine = true;
+            minesLeft--;
         }
     }
+
     return matrix;
 }
 
@@ -48,4 +62,11 @@ export const getGridSize = (difficulty = DEFAULT_DIFFICULTY) => {
         size_x: x_amount,
         size_y: y_amount
     }
+}
+
+const getMinesAmount = (): number => {
+    const maxAmount = Math.floor((gameState.size_x * gameState.size_y) * 0.9);
+    const amount = DIFFICULTIES[gameState.difficulty].mineAmount;
+
+    return amount <= maxAmount ? amount : maxAmount;
 }
