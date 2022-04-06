@@ -1,16 +1,22 @@
 :root {
     --game-cell-amount-x: 9;
     --game-cell-amount-y: 9;
-    --game-cell-gap: 2px;
+    --game-cell-gap: 0px;
 
-    --game-grid-bg: #646464;
+    --game-grid-bg: #939393;
     --game-cell-bg: #939393;
     --game-cell-hover-bg: #b6b6b6;
     --game-cell-checked-bg: #d1d1d1;
     --game-cell-locked-bg: #fcab31;
     --game-cell-locked-invalid-bg: #686868;
     --game-cell-exploded-bg: #df4444;
+
+    --game-cell-border-size: 1px;
     --game-cell-border-radius: 3px;
+    --game-cell-border-color: #646464;
+    --game-cell-pressed-border-color: #9c9c9c;
+    --game-cell-locked-border-color: #a1660c;
+    --game-cell-exploded-border-color: #860101;
 
     --game-cell-nearby-1: #5151df;
     --game-cell-nearby-2: #2eb62e;
@@ -54,13 +60,17 @@
     height: 100%;
 }
 
+.game-cell > button:disabled, .game-cell > button[disabled] {
+    border: var(--game-cell-border-size) solid var(--game-cell-pressed-border-color);
+}
+
 .game-cell > button {
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
     background-color: var(--game-cell-bg);
-    border: 0;
+    border: var(--game-cell-border-size) solid var(--game-cell-border-color);
     transition: background-color 100ms ease-out;
     border-radius: var(--game-cell-border-radius);
 }
@@ -68,7 +78,7 @@
     font-family: Arial;
     font-weight: bold;
     color: black;
-    font-size: 1.8em;
+    font-size: 1.7em;
 }
 .game-cell > button:hover {
     background-color: var(--game-cell-hover-bg);
@@ -81,12 +91,14 @@
 
 .game-cell.game-cell-locked > button {
     background-color: var(--game-cell-locked-bg);
+    border: var(--game-cell-border-size) solid var(--game-cell-locked-border-color);
 }
 .game-cell.game-cell-locked-invalid > button {
     background-color: var(--game-cell-locked-invalid-bg);
 }
 .game-cell.game-cell-exploded > button {
     background-color: var(--game-cell-exploded-bg);
+    border: var(--game-cell-border-size) solid var(--game-cell-exploded-border-color);
 }
 
 .game-cell > button > span.game-cell-nearby-1 {
